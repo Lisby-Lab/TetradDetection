@@ -32,7 +32,9 @@ pip install requirements.txt
 ## Usage
 ### Prerequisites
 1. You should install CUDA-enabled GPU cards or alternatively CPU.
-2. Fluorescent images captured at 
+2. Single-channel grayscale fluorescent images captured at 60x magnification with a 425 nm laser (mCerulean), 561 nm laser (tdTomato) and 488 nm laser (YFP).
+
+![Fluorescent Images](./assets/pipeline_architecture.png)
 
 
 
