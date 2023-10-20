@@ -3,7 +3,7 @@
 ## Description
 High-throughout _S.cerevisiae_ tetrad image analysis pipeline. The pipeline relies on two deeplearning models for accurate detection of tetrads and triads followed by subsequent classification into corresponding tetrad types based on recombination (non-crossover, crossover). The pipeline takes input fluorescent images (mCerulean, tdTomato, YFP) and outputs calculated map distance, interference, non-dicjuntion and gene-conversion frequencies in an .xlsx file.
 
-
+![Pipeline Architecture](./assets/pipeline_architecture.png)
 
 ## Installation
 
@@ -30,7 +30,9 @@ pip install requirements.txt
 ### 5. Download weight files for the neural network and place them in the weights folder
 
 ## Usage
-
+### Prerequisites
+1. You should install CUDA-enabled GPU cards or alternatively CPU.
+2. Fluorescent images captured at 
 
 
 
