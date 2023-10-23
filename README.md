@@ -31,8 +31,18 @@ pip install requirements.txt
 
 ## Usage
 ### Prerequisites
-1. You should install CUDA-enabled GPU cards or alternatively CPU.
+1. Standard computer with enough RAM to apply the neural networks. 8 GB RAM is enough to predict the 1080 x 1080 px image provided as the test data. The RAM requirements scale with the number of image pixels.
 2. Single-channel grayscale fluorescent images captured at 60x magnification with a 425 nm laser (mCerulean), 561 nm laser (tdTomato) and 488 nm laser (YFP).
+3. Images must be named following these guidelines, where the identifier indicates the sequential order of the image. Specifically, the identifier denotes the position of the image in the sequence: e.g., the first image would have an identifier of 1, the second image an identifier of 2, the third image an identifier of 3, and so on. Image Name can be changed according to preference. The suffix indicates which fluorescent channel the image belongs to.
+   
+| Name      | Identifier | Suffix |
+|-----------|------------|--------|
+| mCerulean | \_1\_     | \_1    |
+| tdTomato  | \_1\_     | \_2    |
+| YFP       | \_1\_     | \_3    |
+
+
+
 
 <table border="0">
   <tr>
@@ -41,6 +51,14 @@ pip install requirements.txt
     <td><img src="./assets/yellow.png" alt="YFP"></td>
   </tr>
 </table>
+
+4. Within the TetradDetection environment open a new Terminal and write type in:
+```python
+python3 entry.py -p ./classification/
+```
+5. After the program finishes a new default.xlsx file will be created on the root folder containing calculated Map Distance, Interference, Non-Disjunction and Gene Conversion frequency values.
+
+
 
 
 
