@@ -59,6 +59,6 @@ python3 entry.py --path ./classification/
 
 
 ## Support
-Please contact bszucs@sund.ku.dk and raghav@di.ku.dk if you have any questions about DeepTetrad.
+Please contact bszucs@sund.ku.dk if you have any questions.
 
 
