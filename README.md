@@ -28,6 +28,7 @@ pip install -r requirements.txt
 
 ### 5. Download weight files for the neural network and place them in the weights folder
 [Tetrad Prediction weights](https://sid.erda.dk/share_redirect/DdA5m0BYct)
+
 [Color Classification weights](https://sid.erda.dk/share_redirect/D2yLsBIkjc)
 ## Usage
 ### Prerequisites
