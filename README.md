@@ -27,7 +27,8 @@ pip install -r requirements.txt
 ```
 
 ### 5. Download weight files for the neural network and place them in the weights folder
-
+[Tetrad Prediction weights](https://sid.erda.dk/share_redirect/DdA5m0BYct)
+[Color Classification weights]
 ## Usage
 ### Prerequisites
 1. Standard computer with enough RAM to apply the neural networks. 8 GB RAM is enough to predict the 1080 x 1080 px image provided as the test data. The RAM requirements scale with the number of image pixels.
