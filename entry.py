@@ -271,10 +271,10 @@ def main():
     """Main entry point of the script."""
     parser = argparse.ArgumentParser(description='Run Tetrad Detection')
 
-    parser.add_argument("--tetrad_model", default='./models/tetrad_triad_prediction_weights.pth', 
+    parser.add_argument("--tetrad_model", default='./weights/tetrad_triad_prediction_weights.pth', 
                         help="Path to the tetrad/triad model. Default: args.tetrad_model")
     
-    parser.add_argument("--color_model", default='./models/color_classification_weights.pth', 
+    parser.add_argument("--color_model", default='./weights/color_classification_weights.pth', 
                         help="Path to the color model. Default: args.color_model")
 
     parser.add_argument("-p", "--path", required=False, default="./", metavar="input path to fluorescent images",
