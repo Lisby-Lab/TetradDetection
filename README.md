@@ -27,7 +27,7 @@ pip install -r requirements.txt
 ```
 
 ### 5. Download zip files for the neural network
-[Tetrad Prediction weights](https://sid.erda.dk/share_redirect/BHq8N6h2cH)
+[Tetrad Prediction weights](https://sid.erda.dk/share_redirect/HkPw7gIwrC)
 
 [Color Classification weights](https://sid.erda.dk/share_redirect/ChqIgVyH5h)
 
