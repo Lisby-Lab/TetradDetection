@@ -18,10 +18,14 @@ conda activate TetradDetection
 
 ### 3. Install TetradDetection in Windows
 ```python
-pip install git+https://github.com/Lisby-Lab/TetradDetection.git
+git clone https://github.com/Lisby-Lab/TetradDetection.git
 ```
 
 ### 4. Install modules using requirements.txt
+```python
+cd TetradDetection/
+```
+
 ```python
 pip install -r requirements.txt
 ```
