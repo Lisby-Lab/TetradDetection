@@ -108,7 +108,15 @@ class TetradCounter:
             logging.error(f"Error: The directory {self.root_path} does not exist.")
             return
         files = sorted(os.listdir(self.root_path))
-        well_prefixes = ["_" + f.split('/')[-1].split('_')[1] + "_" for f in files]
+         # Filter out non-image files and directories
+        image_files = [f for f in files if f.endswith('.tiff') and not os.path.isdir(os.path.join(self.root_path, f))]
+        # Check if there are any image files to process
+        if not image_files:
+            error_message = f"No valid image files (.tiff) found in {self.root_path}"
+            logging.error(error_message)
+            raise FileNotFoundError(error_message)
+
+        well_prefixes = ["_" + f.split('/')[-1].split('_')[1] + "_" for f in image_files]
         well_prefixes = list(np.unique(well_prefixes))
         self._process_dataset(well_prefixes, self.root_path)
 
