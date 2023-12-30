@@ -60,7 +60,7 @@ pip install -r requirements.txt
 
 4. Within the TetradDetection environment open a new Terminal and write type in:
 ```python
-./entry.py --path ./imgs/
+python3 entry.py --path ./imgs/
 ```
 5. After the program finishes a new default.xlsx file will be created on the root folder containing calculated Map Distance, Interference, Non-Disjunction and Gene Conversion frequency values.
 
