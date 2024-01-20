@@ -259,18 +259,19 @@ class ComputeGeneticDistance:
             var_fT_yb, var_fNPD_yb, cov_fT_fNPD_yb: Variance and covariance for Yellow-Blue combination.
         
         """
+
         # Compute fP, fNPD, and fT for each combination (red-blue, red-yellow, yellow-blue)
-        self.result_dict['fP_rb'] = self._compute_fP(self.tetrad_type_dict, ['A', 'D', 'K'], self.n_total_viable_tetrads)
-        self.result_dict['fNPD_rb'] = self._compute_fNPD(self.tetrad_type_dict, ['G', 'J', 'H'], self.n_total_viable_tetrads)
-        self.result_dict['fT_rb'] = self._compute_fT(self.tetrad_type_dict, ['B', 'C', 'E', 'F', 'I'], self.n_total_viable_tetrads)
+        self.result_dict['fP_rb'] = self._compute_fP(self.tetrad_type_dict, ['1', '4', '11'], self.n_total_viable_tetrads)
+        self.result_dict['fNPD_rb'] = self._compute_fNPD(self.tetrad_type_dict, ['7', '10', '8'], self.n_total_viable_tetrads)
+        self.result_dict['fT_rb'] = self._compute_fT(self.tetrad_type_dict, ['2', '3', '5', '6', '9'], self.n_total_viable_tetrads)
 
-        self.result_dict['fP_ry'] = self._compute_fP(self.tetrad_type_dict, ['A', 'C'], self.n_total_viable_tetrads)
-        self.result_dict['fNPD_ry']  = self._compute_fNPD(self.tetrad_type_dict, ['K', 'J', 'I', 'H'], self.n_total_viable_tetrads)
-        self.result_dict['fT_ry'] = self._compute_fT(self.tetrad_type_dict, ['B', 'D', 'E', 'F', 'G'], self.n_total_viable_tetrads)
+        self.result_dict['fP_ry'] = self._compute_fP(self.tetrad_type_dict, ['1', '3'], self.n_total_viable_tetrads)
+        self.result_dict['fNPD_ry']  = self._compute_fNPD(self.tetrad_type_dict, ['11', '10', '9', '8'], self.n_total_viable_tetrads)
+        self.result_dict['fT_ry'] = self._compute_fT(self.tetrad_type_dict, ['2', '4', '5', '6', '7'], self.n_total_viable_tetrads)
 
-        self.result_dict['fP_yb'] = self._compute_fP(self.tetrad_type_dict, ['A', 'B', 'H', 'J'], self.n_total_viable_tetrads)
-        self.result_dict['fNPD_yb'] = self._compute_fNPD(self.tetrad_type_dict, ['K'], self.n_total_viable_tetrads)
-        self.result_dict['fT_yb'] = self._compute_fT(self.tetrad_type_dict, ['C', 'D', 'E', 'F', 'G', 'I'], self.n_total_viable_tetrads)
+        self.result_dict['fP_yb'] = self._compute_fP(self.tetrad_type_dict, ['1', '2', '8', '10'], self.n_total_viable_tetrads)
+        self.result_dict['fNPD_yb'] = self._compute_fNPD(self.tetrad_type_dict, ['11'], self.n_total_viable_tetrads)
+        self.result_dict['fT_yb'] = self._compute_fT(self.tetrad_type_dict, ['3', '4', '5', '6', '7', '9'], self.n_total_viable_tetrads)
 
         self.result_dict['var_fT_rb'] = self.result_dict['fT_rb'] * (1 - self.result_dict['fT_rb']) / self.n_total_viable_tetrads
         self.result_dict['var_fNPD_rb'] = self.result_dict['fNPD_rb'] * (1 - self.result_dict['fNPD_rb']) / self.n_total_viable_tetrads
@@ -316,19 +317,19 @@ class ComputeGeneticDistance:
             tetrad_type_dict (dict): Dictionary containing tetrad types and their respective counts.
         """
         # Red - Blue
-        self.result_dict['cM_rb'] = (100 * ((6 * (self.tetrad_type_dict['G'] + self.tetrad_type_dict['J'] + self.tetrad_type_dict['H'] ))
-                                            + (self.tetrad_type_dict['B']  + self.tetrad_type_dict['C'] + self.tetrad_type_dict['E'] 
-                                               + self.tetrad_type_dict['F'] + self.tetrad_type_dict['I']))) / (2 * self.n_total_viable_tetrads)
+        self.result_dict['cM_rb'] = (100 * ((6 * (self.tetrad_type_dict['7'] + self.tetrad_type_dict['10'] + self.tetrad_type_dict['8'] ))
+                                            + (self.tetrad_type_dict['2']  + self.tetrad_type_dict['3'] + self.tetrad_type_dict['5'] 
+                                               + self.tetrad_type_dict['6'] + self.tetrad_type_dict['9']))) / (2 * self.n_total_viable_tetrads)
 
         # Red - Yellow
-        self.result_dict['cM_ry'] = (100 * ((6 * (self.tetrad_type_dict['K'] + self.tetrad_type_dict['J'] + self.tetrad_type_dict['I']  + self.tetrad_type_dict['H'] ))
-                                            + (self.tetrad_type_dict['B'] + self.tetrad_type_dict['D'] + self.tetrad_type_dict['E'] 
-                                               + self.tetrad_type_dict['F'] + self.tetrad_type_dict['G']))) / (2 * self.n_total_viable_tetrads)
+        self.result_dict['cM_ry'] = (100 * ((6 * (self.tetrad_type_dict['11'] + self.tetrad_type_dict['10'] + self.tetrad_type_dict['9']  + self.tetrad_type_dict['8'] ))
+                                            + (self.tetrad_type_dict['2'] + self.tetrad_type_dict['4'] + self.tetrad_type_dict['5'] 
+                                               + self.tetrad_type_dict['6'] + self.tetrad_type_dict['7']))) / (2 * self.n_total_viable_tetrads)
 
         # Yellow - Blue
-        self.result_dict['cM_yb'] = (100 * ((6 * (self.tetrad_type_dict['K'] ))
-                                            + (self.tetrad_type_dict['C'] + self.tetrad_type_dict['D'] + self.tetrad_type_dict['E'] 
-                                               + self.tetrad_type_dict['F'] + self.tetrad_type_dict['G'] + self.tetrad_type_dict['I']))) / (2 * self.n_total_viable_tetrads)
+        self.result_dict['cM_yb'] = (100 * ((6 * (self.tetrad_type_dict['11'] ))
+                                            + (self.tetrad_type_dict['3'] + self.tetrad_type_dict['4'] + self.tetrad_type_dict['5'] 
+                                               + self.tetrad_type_dict['6'] + self.tetrad_type_dict['7'] + self.tetrad_type_dict['9']))) / (2 * self.n_total_viable_tetrads)
 
     def perkins_distance_assumption_no_interference(self) -> None:
         """Compute X using the Perkins equation without interference assumption."""
@@ -413,17 +414,17 @@ class ComputeGeneticInterference:
         
     def compute_interference_stahl(self) -> None:
         """Compute interference using Franklin Stahl (2008) method."""
-        self.result_dict['P_obs_rb'] = float(self.tetrad_type_dict['A'] + self.tetrad_type_dict['D'] + self.tetrad_type_dict['K'])
-        self.result_dict['T_obs_rb'] = float(self.tetrad_type_dict['B'] + self.tetrad_type_dict['C'] + self.tetrad_type_dict['E'] + self.tetrad_type_dict['F'] + self.tetrad_type_dict['I'])
-        self.result_dict['NPD_obs_rb'] = float(self.tetrad_type_dict['G'] + self.tetrad_type_dict['J'] + self.tetrad_type_dict['H'])
+        self.result_dict['P_obs_rb'] = float(self.tetrad_type_dict['1'] + self.tetrad_type_dict['4'] + self.tetrad_type_dict['11'])
+        self.result_dict['T_obs_rb'] = float(self.tetrad_type_dict['2'] + self.tetrad_type_dict['3'] + self.tetrad_type_dict['5'] + self.tetrad_type_dict['6'] + self.tetrad_type_dict['9'])
+        self.result_dict['NPD_obs_rb'] = float(self.tetrad_type_dict['7'] + self.tetrad_type_dict['10'] + self.tetrad_type_dict['8'])
 
-        self.result_dict['P_obs_ry'] = float(self.tetrad_type_dict['A'] + self.tetrad_type_dict['C'])
-        self.result_dict['T_obs_ry'] = float(self.tetrad_type_dict['B'] + self.tetrad_type_dict['D'] + self.tetrad_type_dict['E'] + self.tetrad_type_dict['F'] + self.tetrad_type_dict['G'])
-        self.result_dict['NPD_obs_ry'] = float(self.tetrad_type_dict['J'] + self.tetrad_type_dict['K'] + self.tetrad_type_dict['I'] + self.tetrad_type_dict['H'])
+        self.result_dict['P_obs_ry'] = float(self.tetrad_type_dict['1'] + self.tetrad_type_dict['3'])
+        self.result_dict['T_obs_ry'] = float(self.tetrad_type_dict['2'] + self.tetrad_type_dict['4'] + self.tetrad_type_dict['5'] + self.tetrad_type_dict['6'] + self.tetrad_type_dict['7'])
+        self.result_dict['NPD_obs_ry'] = float(self.tetrad_type_dict['10'] + self.tetrad_type_dict['11'] + self.tetrad_type_dict['9'] + self.tetrad_type_dict['8'])
 
-        self.result_dict['P_obs_yb'] = float(self.tetrad_type_dict['A'] + self.tetrad_type_dict['B'] + self.tetrad_type_dict['H'] + self.tetrad_type_dict['J'])
-        self.result_dict['T_obs_yb'] = float(self.tetrad_type_dict['C'] + self.tetrad_type_dict['D'] + self.tetrad_type_dict['E'] + self.tetrad_type_dict['F'] + self.tetrad_type_dict['G'] + self.tetrad_type_dict['I'])
-        self.result_dict['NPD_obs_yb'] = float(self.tetrad_type_dict['K'])
+        self.result_dict['P_obs_yb'] = float(self.tetrad_type_dict['1'] + self.tetrad_type_dict['2'] + self.tetrad_type_dict['8'] + self.tetrad_type_dict['10'])
+        self.result_dict['T_obs_yb'] = float(self.tetrad_type_dict['3'] + self.tetrad_type_dict['4'] + self.tetrad_type_dict['5'] + self.tetrad_type_dict['6'] + self.tetrad_type_dict['7'] + self.tetrad_type_dict['9'])
+        self.result_dict['NPD_obs_yb'] = float(self.tetrad_type_dict['11'])
 
         # Frequency of TTTetrad types expected
         self.result_dict['fT_exp_rb'] = 2/3 * (1 - math.exp(-3 * self.result_dict['X_rb']))
@@ -497,9 +498,9 @@ class ComputeGeneticInterference:
         self.result_dict['DCO_exp'] = (self.n_total_viable_tetrads / 100) * self.result_dict['fDCO_exp']
 
         # Frequency of DCOobs
-        self.result_dict['DCO_obs'] = float(self.tetrad_type_dict['E'] + self.tetrad_type_dict['F'] + self.tetrad_type_dict['G'] + 
-                                            self.tetrad_type_dict['D'] + self.tetrad_type_dict['K'] + self.tetrad_type_dict['I'] + 
-                                            self.tetrad_type_dict['J'])
+        self.result_dict['DCO_obs'] = float(self.tetrad_type_dict['5'] + self.tetrad_type_dict['6'] + self.tetrad_type_dict['G7'] + 
+                                            self.tetrad_type_dict['4'] + self.tetrad_type_dict['11'] + self.tetrad_type_dict['9'] + 
+                                            self.tetrad_type_dict['10'])
         self.result_dict['fDCO_obs'] = self.result_dict['DCO_obs'] / self.n_total_viable_tetrads
 
         # Compute I and its significance
@@ -555,20 +556,20 @@ class ComputeNonDisjunction:
         MII_freq_wt = TetradCalculator.CONSTANTS['non_disjunction_frequency_']['MII']
 
         # MI Frequency
-        MI_proportion = (self.tetrad_type_dict['L'] / self.n_total_tetrads)
+        MI_proportion = (self.tetrad_type_dict['12'] / self.n_total_tetrads)
         self.result_dict['MI_frequency'] = (MI_proportion * 100)
 
         # MII Frequency
-        MII_proportion = (self.tetrad_type_dict['M'] / self.n_total_tetrads)
+        MII_proportion = (self.tetrad_type_dict['13'] / self.n_total_tetrads)
         self.result_dict['MII_frequency'] = (MII_proportion * 100)
 
         # Pooled proportions
-        MI_pooled_proportion = ((MI_proportion * self.n_total_tetrads) + (MI_freq_wt * classified_events_wt)) / (classified_events_wt + self.n_total_tetrads)
-        MII_pooled_proportion = ((MII_proportion * self.n_total_tetrads) + (MII_freq_wt * classified_events_wt)) / (classified_events_wt + self.n_total_tetrads)
+        MI_pooled_proportion = ((MI_proportion * self.n_total_tetrads) + (MI_freq_wt/100 * classified_events_wt)) / (classified_events_wt + self.n_total_tetrads)
+        MII_pooled_proportion = ((MII_proportion * self.n_total_tetrads) + (MII_freq_wt/100 * classified_events_wt)) / (classified_events_wt + self.n_total_tetrads)
 
         # Z-scores
-        MI_z_score = (MI_proportion - MI_freq_wt) / math.sqrt(MI_pooled_proportion * (1 - MI_pooled_proportion) * (1 / classified_events_wt + 1 / self.n_total_tetrads))
-        MII_z_score = (MII_proportion - MII_freq_wt) / math.sqrt(MII_pooled_proportion * (1 - MII_pooled_proportion) * (1 / classified_events_wt + 1 / self.n_total_tetrads))
+        MI_z_score = (MI_proportion - MI_freq_wt/100) / math.sqrt(MI_pooled_proportion * (1 - MI_pooled_proportion) * (1 / classified_events_wt + 1 / self.n_total_tetrads))
+        MII_z_score = (MII_proportion - MII_freq_wt/100) / math.sqrt(MII_pooled_proportion * (1 - MII_pooled_proportion) * (1 / classified_events_wt + 1 / self.n_total_tetrads))
 
         # P-values
         self.result_dict['MI_p_value'] = 2 * (1 - stats.norm.cdf(abs(MI_z_score)))
@@ -645,6 +646,16 @@ class ComputeGeneConversion:
         sum_gc_loss_frequency = (sum(one_loss_results.values()) + sum(two_loss_results.values())) / 100
         self.result_dict['sum_gc_gain'] = sum_gc_gain_frequency * 100
         self.result_dict['sum_gc_loss'] = sum_gc_loss_frequency * 100
+
+        gc_gain_pooled_proportion = ((sum_gc_gain_frequency*self.n_total_tetrads) + ((sum_gc_gain_wt_freq/100)*classified_events_wt)) / (classified_events_wt + self.n_total_tetrads)
+        gc_loss_pooled_proportion = ((sum_gc_loss_frequency*self.n_total_tetrads) + ((sum_gc_loss_wt_freq/100)*classified_events_wt)) / (classified_events_wt + self.n_total_tetrads)
+        
+        # Z-score
+        gc_gain_z_score = (sum_gc_gain_frequency - (sum_gc_gain_wt_freq/100)) / math.sqrt(gc_gain_pooled_proportion * (1-gc_gain_pooled_proportion) * (1/classified_events_wt + 1/self.n_total_tetrads))
+        gc_loss_z_score = (sum_gc_loss_frequency - (sum_gc_loss_wt_freq/100)) / math.sqrt(gc_loss_pooled_proportion * (1-gc_loss_pooled_proportion) * (1/classified_events_wt + 1/self.n_total_tetrads))
+        
+        self.result_dict['gc_gain_p_value'] = 2*(1-stats.norm.cdf(abs(gc_gain_z_score)))
+        self.result_dict['gc_loss_p_value'] = 2*(1-stats.norm.cdf(abs(gc_loss_z_score)))
 
 class ComputeColorFraction:
     def __init__(self, 
