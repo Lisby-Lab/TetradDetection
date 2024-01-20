@@ -1,33 +1,34 @@
 TETRAD_MAP_FOUR = {
     ## Non- Crossover ##
-    ('blue','blue','orange','orange'): 'A',
+    ('blue','blue','orange','orange'): '1',
     ##########################
     ### Single Crossovers ####
     ##########################
-    ('blue','orange','purple','yellow'): 'B',  
-    ('blue','empty','orange', 'white'): 'C',
+    ('blue','orange','purple','yellow'): '2',  
+    ('blue','empty','orange', 'white'): '3',
     ###########################
     #### Double Crossovers ####
     ###########################
-    ('blue','green', 'orange', 'red'): 'D', 
-    ('empty','green', 'orange', 'purple'): 'E',
-    ('blue','red', 'white', 'yellow'): 'F',
-    ('empty','purple', 'white', 'yellow'): 'G',
-    ('purple','purple', 'yellow', 'yellow'): 'H',    
+    ('blue','green', 'orange', 'red'): '4', 
+    ('empty','green', 'orange', 'purple'): '5',
+    ('blue','red', 'white', 'yellow'): '6',
+    ('empty','purple', 'white', 'yellow'): '7',
+    ('purple','purple', 'yellow', 'yellow'): '8',    
     ###########################
     #### Triple Crossovers ####
     ###########################
-    ('green','purple','red','yellow') : 'I',
-    ('empty','green','red','white') : 'J',
+    ('green','purple','red','yellow') : '9',
+    ('empty','green','red','white') : '10',
     ###########################
     #### Quadra Crossovers ####
     ###########################
-    ('green','green', 'red', 'red') : 'K',
+    ('green','green', 'red', 'red') : '11',
     ###########################
     ######### MI and MII NDJ ##########
     ###########################
-    ('empty','empty', 'white', 'white'): 'L',
-    ('blue','blue', 'empty', 'orange') : 'M', 
+    ('empty','empty', 'white', 'white'): '12',
+    ('blue','blue', 'empty', 'orange') : '13', 
+    ('blue','empty','orange','orange') : '14',
     ###############################
     ######  Gene Conversion #######
     ###############################   
@@ -60,58 +61,58 @@ TETRAD_MAP_FOUR = {
 
 
 TETRAD_MAP_THREE = {
-    ('blue','orange','orange'): 'A', 
-    ('blue','blue','orange'): 'A', 
+    ('blue','orange','orange'): '1', 
+    ('blue','blue','orange'): '1', 
         
-    ('blue','orange','purple'): 'B',
-    ('orange','purple','yellow'): 'B', 
-    ('blue','purple','yellow'): 'B',
-    ('blue', 'orange' , 'yellow'): 'B', 
+    ('blue','orange','purple'): '2',
+    ('orange','purple','yellow'): '2', 
+    ('blue','purple','yellow'): '2',
+    ('blue', 'orange' , 'yellow'): '2', 
    
-    ('blue','orange', 'white'): 'C',
-    ('empty','orange', 'white'): 'C',  
-    ('blue','empty', 'white'): 'C',
-    ('blue','empty','orange'): 'C', 
+    ('blue','orange', 'white'): '3',
+    ('empty','orange', 'white'): '3',  
+    ('blue','empty', 'white'): '3',
+    ('blue','empty','orange'): '3', 
         
-    ('blue', 'orange', 'red'): 'D',
-    ('blue', 'green', 'red'): 'D', 
-    ('blue', 'green', 'orange'): 'D',  
-    ('green','orange','red') : 'D',
+    ('blue', 'orange', 'red'): '4',
+    ('blue', 'green', 'red'): '4', 
+    ('blue', 'green', 'orange'): '4',  
+    ('green','orange','red') : '4',
         
-    ('empty', 'orange', 'purple'): 'E', 
-    ('empty','green', 'orange'): 'E', 
-    ('empty','green', 'purple'): 'E', 
-    ('green', 'orange', 'purple'): 'E',
+    ('empty', 'orange', 'purple'): '5', 
+    ('empty','green', 'orange'): '5', 
+    ('empty','green', 'purple'): '5', 
+    ('green', 'orange', 'purple'): '5',
         
-    ('blue', 'white', 'yellow'): 'F', 
-    ('blue', 'red', 'white'): 'F', 
-    ('red', 'white', 'yellow'): 'F',  
-    ('blue','red','yellow'): 'F', 
+    ('blue', 'white', 'yellow'): '6', 
+    ('blue', 'red', 'white'): '6', 
+    ('red', 'white', 'yellow'): '6',  
+    ('blue','red','yellow'): '6', 
         
-    ('purple', 'white', 'yellow'): 'G',
-    ('empty', 'purple', 'white'): 'G',
-    ('empty', 'purple', 'yellow'): 'G', 
-    ('empty','white','yellow'): 'G', 
+    ('purple', 'white', 'yellow'): '7',
+    ('empty', 'purple', 'white'): '7',
+    ('empty', 'purple', 'yellow'): '7', 
+    ('empty','white','yellow'): '7', 
         
-    ('purple', 'purple', 'yellow'): 'H', 
-    ('purple', 'yellow', 'yellow'): 'H', 
+    ('purple', 'purple', 'yellow'): '8', 
+    ('purple', 'yellow', 'yellow'): '8', 
         
-    ('green', 'purple', 'red') : 'I',  
-    ('green','purple','yellow') : 'I', 
-    ('purple','red','yellow') : 'I', 
+    ('green', 'purple', 'red') : '9',  
+    ('green','purple','yellow') : '9', 
+    ('purple','red','yellow') : '9', 
         
-    ('empty','green','red') : 'J', 
-    ('empty','green','white') : 'J', 
-    ('green','red','white') : 'J',
-    ('empty','red','white') : 'J', 
+    ('empty','green','red') : '10', 
+    ('empty','green','white') : '10', 
+    ('green','red','white') : '10',
+    ('empty','red','white') : '10', 
         
-    ('green', 'red', 'red') : 'K', 
-    ('green', 'green', 'red') : 'K',
+    ('green', 'red', 'red') : '11', 
+    ('green', 'green', 'red') : '11',
         
-    ('empty','empty', 'white'): 'L', 
-    ('empty', 'white', 'white'): 'L',
+    ('empty','empty', 'white'): '12', 
+    ('empty', 'white', 'white'): '12',
         
-    ('blue','blue', 'empty'): 'M',
+    ('blue','blue', 'empty'): '13',
 
     }
 
