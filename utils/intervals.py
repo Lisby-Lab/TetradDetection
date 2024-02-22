@@ -620,6 +620,12 @@ class ComputeGeneConversion:
         return {event: (tetrad_type_dict[event] / total_tetrads) * 100 for event in event_types}
     
     def compute_gene_conversion_events(self) -> None: 
+
+        classified_events_wt = TetradCalculator.CONSTANTS['gene_conversion_']['events']
+        sum_gc_gain_wt_freq = TetradCalculator.CONSTANTS['gene_conversion_']['gain_wt_freq']
+        sum_gc_loss_wt_freq = TetradCalculator.CONSTANTS['gene_conversion_']['loss_wt_freq']
+
+        
         # 1 GC events gain and loss
         events_one_gain = ['N1G', 'N2G', 'N3G']
         events_one_loss = ['N1L', 'N2L', 'N3L']
