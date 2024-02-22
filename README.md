@@ -12,7 +12,7 @@ High-throughout _S.cerevisiae_ tetrad image analysis pipeline. The pipeline reli
 
 ### 2. Create a virtual environment and activate it
 ```python
-conda create -n TetradDetection
+conda create -n TetradDetection python=3.11.7
 conda activate TetradDetection
 ```
 
