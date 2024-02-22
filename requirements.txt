@@ -8,3 +8,5 @@ torchvision==0.15.1
 torch==2.0.0
 scikit-image==0.21.0
 opencv-python==4.8.0.76
+pandas==2.2.0
+tensorboard==2.11.2
