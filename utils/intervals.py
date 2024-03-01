@@ -5,6 +5,7 @@ from scipy import stats
 from typing import Dict, Union, List, Any
 import tkinter as tk
 from tkinter import ttk
+from scipy.stats import chi2_contingency
 
 class TetradCalculatorApp:
     """
@@ -37,7 +38,7 @@ class TetradCalculatorApp:
         self.color_counter_entry.grid(row=0, column=1, padx=10, pady=5)
 
         # Create and place labels and input fields for tetrad_type_dict
-        ttk.Label(root, text="Enter Tetrad Types (e.g. {'A': 5, 'B': 3}):").grid(row=1, column=0, padx=10, pady=5)
+        ttk.Label(root, text="Enter Tetrad Types (e.g. {'1': 5, '2': 3}):").grid(row=1, column=0, padx=10, pady=5)
         self.tetrad_type_entry = ttk.Entry(root, width=50)
         self.tetrad_type_entry.grid(row=1, column=1, padx=10, pady=5)
 
@@ -78,7 +79,7 @@ class TetradCalculator:
         'se_wt': {'rb': 0.0046, 'ry': 0.004025, 'yb': 0.0023}, # Standard Error calculated according to Perkins equation on large scale Wild-Type dataset
         'wt_perkins_var': {'rb': 0.0000243, 'ry': 0.0000185, 'yb': 0.00000125}, # Sampling Variance of the Perkins Equation
          'non_disjunction_frequency_' : {'MI':0.05, 'MII': 0.01, 'events': 16063}, # tetrads from 4 independent datasets calculated for mean
-        'gene_conversion_' : {'gain_wt_freq': 0.1472, 'loss_wt_freq':0.52, 'events': 16063}
+        'gene_conversion_' : {'gain_wt_freq': 0.03, 'loss_wt_freq':0.26, 'events': 16063}
     }
     """
     A class to perform calculations on tetrads based on provided frequencies.
@@ -145,7 +146,7 @@ class TetradCalculator:
         self.n_total_all_tetrads = ['broken_mask', 'bbox_error', 'predictions_below_confidence', 
                                     'less_than_4_spores', 'mask_error', 'less_than_3_spores'] 
         
-        self.n_total_excluded_tetrads = self.n_total_all_tetrads + ['Z', 'L', 'M', 'N1G', 'N2G', 'N3G', 'N1L', 'N2L', 'N3L', 'O1G', 'O2G', 'O3G', 'O4GL', 'O5G',  'O6G', 'O1L', 'O2L', 'O3L', 'O4L', 'O5L', 'O6L' ]  # Number of tetrads used for calculating genetic distance and interference - removed gene conversion, nondisjunction and quality control events
+        self.n_total_excluded_tetrads = self.n_total_all_tetrads + ['Z', 'L', 'M', 'N1G', 'N2G', 'N3G', 'N1L', 'N2L', 'O1G', 'O2G', 'O3G', 'O4GL', 'O5G',  'O6G', 'O1L', 'O2L', 'O3L', 'O4L', 'O5L' ]  # Number of tetrads used for calculating genetic distance and interference - removed gene conversion, nondisjunction and quality control events
         self.n_total_tetrads = self.calculate_total(tetrad_type_dict, self.n_total_all_tetrads)
         self.n_total_viable_tetrads = self.calculate_total(tetrad_type_dict, self.n_total_excluded_tetrads)
         
@@ -507,8 +508,18 @@ class ComputeGeneticInterference:
         self.result_dict['I1'] = (self.result_dict['R_ry'] + self.result_dict['R_yb'] - self.result_dict['R_rb']) / (2 * self.result_dict['R_ry'] * self.result_dict['R_yb'])
         self.result_dict['X2_I1'] = (self.result_dict['DCO_obs'] - self.result_dict['DCO_exp'])**2 / self.result_dict['DCO_exp']
         self.result_dict['X2_p_I1'] = 1 - stats.chi2.cdf(self.result_dict['X2_I1'], 1)
-
         self.result_dict['I2'] = self.result_dict['fDCO_obs'] / (self.result_dict['R_ry'] * self.result_dict['R_yb'])
+
+        self.result_dict['CoC'] =(float(self.tetrad_type_dict['4']+self.tetrad_type_dict['11']+self.tetrad_type_dict['5']+self.tetrad_type_dict['6']+self.tetrad_type_dict['G']+self.tetrad_type_dict['9']+self.tetrad_type_dict['10'])  / float(self.tetrad_type_dict['3'] + self.tetrad_type_dict['8']))
+
+        pd_ref_ry = float(self.tetrad_type_dict['1']+self.tetrad_type_dict['2'])
+        tt_ref_ry=float(self.tetrad_type_dict['3']+self.tetrad_type_dict['4']+self.tetrad_type_dict['5']+self.tetrad_type_dict['6']+self.tetrad_type_dict['G']+self.tetrad_type_dict['9']+self.tetrad_type_dict['10']+self.tetrad_type_dict['8']+self.tetrad_type_dict['11'])
+        pd_test_ry = float(self.tetrad_type_dict['1']+self.tetrad_type_dict['3']+self.tetrad_type_dict['8'])
+        tt_test_ry=float(self.tetrad_type_dict['2']+self.tetrad_type_dict['4']+self.tetrad_type_dict['5']+self.tetrad_type_dict['6']+self.tetrad_type_dict['G']+self.tetrad_type_dict['9']+self.tetrad_type_dict['10']+self.tetrad_type_dict['8']+self.tetrad_type_dict['11'])
+
+        contingency_table_ry = np.array([[pd_ref_ry, tt_ref_ry], [pd_test_ry, tt_test_ry]])                                                          
+        g_ry, p_ry, dof_ry, expected_ry = chi2_contingency(contingency_table_ry, lambda_="log-likelihood")
+        self.result_dict['CoC_p'] = p_ry
 
     def compute_interference_papazian_mod(self) -> None:
         """Compute interference using the modified Papazian NPD ratio."""
@@ -620,19 +631,18 @@ class ComputeGeneConversion:
         return {event: (tetrad_type_dict[event] / total_tetrads) * 100 for event in event_types}
     
     def compute_gene_conversion_events(self) -> None: 
-
+                
         classified_events_wt = TetradCalculator.CONSTANTS['gene_conversion_']['events']
         sum_gc_gain_wt_freq = TetradCalculator.CONSTANTS['gene_conversion_']['gain_wt_freq']
         sum_gc_loss_wt_freq = TetradCalculator.CONSTANTS['gene_conversion_']['loss_wt_freq']
-
         
         # 1 GC events gain and loss
         events_one_gain = ['N1G', 'N2G', 'N3G']
-        events_one_loss = ['N1L', 'N2L', 'N3L']
+        events_one_loss = ['N1L', 'N2L']
 
         # 2 GC events gain and loss
         events_two_gain = ['O1G', 'O2G', 'O3G', 'O4G', 'O5G', 'O6G']
-        events_two_loss = ['O1L', 'O2L', 'O3L', 'O4L', 'O5L', 'O6L']
+        events_two_loss = ['O1L', 'O2L', 'O3L', 'O4L', 'O5L']
 
         one_gain_results = self.calculate_gain_loss(events_one_gain, self.tetrad_type_dict, self.n_total_tetrads)
         one_loss_results = self.calculate_gain_loss(events_one_loss, self.tetrad_type_dict, self.n_total_tetrads)
