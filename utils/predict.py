@@ -15,6 +15,7 @@ from collections import defaultdict
 from skimage import exposure, img_as_ubyte, img_as_float32
 from utils import tetrad_types
 
+
 class TetradPredictor:
     """
     Class for analyzing and predicting tetrads from image data.
@@ -60,8 +61,7 @@ class TetradPredictor:
         merged_rescaled = cv2.merge((blue, red, yellow))
         # Convert image to tensor and perform prediction
         tensor_image = transform.to_tensor(merged_rescaled)
-        outputs = self.tetrad_model([tensor_image])
-        
+        outputs = self.tetrad_model([tensor_image])        
         # Process predictions
         pred_score = outputs[0]['scores'].detach().cpu().numpy()
         above_threshold_indices = pred_score > self.tetrad_confidence
