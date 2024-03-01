@@ -38,7 +38,6 @@ TETRAD_MAP_FOUR = {
     ('blue', 'orange', 'orange', 'purple') : 'N2G',    
     ('blue', 'blue', 'orange', 'yellow') : 'N2L',    
     ('blue', 'blue', 'orange', 'white') : 'N3G', 
-    ('blue', 'empty', 'orange', 'orange') : 'N3L',
     
     # Double Gene Conversion Events #
     ('green', 'green', 'orange', 'orange') : 'O1G', 
@@ -56,7 +55,6 @@ TETRAD_MAP_FOUR = {
     ('empty', 'empty', 'orange', 'orange') : 'O5L',  
 
     ('orange', 'orange', 'purple', 'purple') : 'O6G', 
-    ('blue', 'blue', 'yellow', 'yellow') : 'O6L', 
     }
 
 
