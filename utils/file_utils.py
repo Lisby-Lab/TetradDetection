@@ -29,23 +29,23 @@ def update_sheet_with_results(sheet: pd.DataFrame, prefix: str, result_dict: Dic
     Returns:
     - Updated DataFrame.
     """
-    print('detected_tetrad', detected_tetrad)
+    #print('detected_tetrad', detected_tetrad)
     # Ensure 'Prefix' column exists in the sheet
     if 'Prefix' not in sheet.columns:
         sheet['Prefix'] = ''
     # Map of limited columns and their corresponding verbose names
-    limited_columns = ['cM_rb', 'cM_ry', 'cM_yb','significance_map_distance_rb','X2_p_rb','F_rb','total_classified','total_predicted','MI_frequency','MII_frequency','CoC_1','sum_gc_gain','sum_gc_loss']
+    limited_columns = ['cM_rb', 'cM_ry', 'cM_yb','significance_map_distance_rb','X2_p_rb','F_rb','total_classified','total_predicted','MI_frequency','MII_frequency','CoC','sum_gc_gain','sum_gc_loss']
     column_map = {'cM_rb' : "Centimorgan (Red-Blue)",
                  'cM_ry': "Centimorgan (Red-Yellow)",
                  'cM_yb': "Centimorgan (Yellow-Blue)",
                  'significance_map_distance_rb': "Significance of Differences (wt:mutant)",
-                 'X2_p_rb': "interference p-value",
+                 'X2_p_rb': "Ch2 interference p-value",
                  'F_rb': "Papazzian Interfernce (Red-Blue)",
                  'total_classified': "Total Classified",
                   'total_predicted': "Total Predicted",
                   'MI_frequency': "MI NonDisjunction (frequency)",
                   'MII_frequency': "MII NonDisjunction (frequency)",
-                  'I1': "Coefficient of Coincidence (Red-Blue)",
+                  'CoC': "Coefficient of Coincidence (Red-Blue)",
                   'sum_gc_gain': "Gene Conversion with Gain of marker (frequency)",
                   'sum_gc_loss': "Gene Conversion with Loss of marker (frequency)",
                  }
