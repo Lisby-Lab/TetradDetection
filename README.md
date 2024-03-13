@@ -64,6 +64,12 @@ python3 entry.py --path ./imgs/
 ```
 5. After the program finishes a new default.xlsx file will be created on the root folder containing calculated Map Distance, Interference, Non-Disjunction and Gene Conversion frequency values.
 
+### Side note:
+A tetrad detection only model is also available for [download](https://sid.erda.dk/share_redirect/B2zhGjLLiu). Unzip the weights and place them in the weights folder. 
+Within the Terminal type in:
+```python
+python3 entry.py --path ./imgs/ --tetrad_model ./weights/tetrad_only_prediction_weights.pth
+```
 
 ## Support
 Please contact bszucs@sund.ku.dk if you have any questions.
