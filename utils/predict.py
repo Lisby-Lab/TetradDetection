@@ -82,7 +82,9 @@ class TetradPredictor:
 
         # Convert numerical labels to string labels
         pred_class_labels = [self.CLASS_NAMES[label] for label in pred_classes]
-
+        
+        if 'triad' in pred_class_labels:
+            pred_class_labels = ['triad'] * len(pred_class_labels)
         return len(pred_classes), n_tetrads, n_triads, scaled_transform_list, pred_class_labels
 
 '''''''''
@@ -180,9 +182,11 @@ class TetradClassifier:
             current_prediction = tetrad_pred_class_thr[i]
             if current_prediction == 'tetrad':
                 tetrad_counts = self._type_classification(4, 4, tetrad_type_dict, tetrad_color_count, current_prediction, cropped_image, batch_color_outputs[i])
+                triad_counts = {}
             elif current_prediction == 'triad':
                 triad_counts = self._type_classification(4, 3, triad_type_dict, triad_color_count, current_prediction, cropped_image, batch_color_outputs[i])
-
+                tetrad_counts = {}
+                
         # Combine tetrad and triad counts
         for key in set(tetrad_type_dict) | set(triad_type_dict):
             sum_type_dict[key] = tetrad_type_dict.get(key, 0) + triad_type_dict.get(key, 0)
