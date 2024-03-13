@@ -64,7 +64,10 @@ class TetradCounter:
         Returns:
             torch.model: The loaded tetrad prediction model.
         """
-        model = engine.TetradPredictionArchitecture(num_classes=3)
+        if self.tetrad_model_path == './weights/tetrad_triad_prediction_weights.pth':
+            model = engine.TetradPredictionArchitecture(num_classes=3)
+        else:
+            model = engine.TetradPredictionArchitecture(num_classes=2)
         model.load_state_dict(torch.load(self.tetrad_model_path, map_location=self.device))
         if not os.path.exists(self.tetrad_model_path):
             logging.error(f"Model not found at {self.tetrad_model_path}")
@@ -104,6 +107,7 @@ class TetradCounter:
 
     def run_tetrad_count_all_process(self) -> None:
         """Main process for running tetrad detection and color classification on all datasets."""
+        print('Tetrad Detection started!')
         if not os.path.exists(self.root_path):
             logging.error(f"Error: The directory {self.root_path} does not exist.")
             return
@@ -171,13 +175,6 @@ class TetradCounter:
         counter_sum = Counter(detected_sum)
         color_counter = Counter(color_dict)
         
-        if sum(counter_sum.values()) != 0: 
-            # Create an instance of the TetradCalculator
-            calculator = intervals.TetradCalculator(color_counter,counter_sum, (self.tetrads_well+self.triads_well))
-            # Call the compute method on the calculator instance
-            sum_result_dict = calculator.compute()   
-            logging.debug(f'[total_classified] {sum_result_dict["total_classified"]}')
-            file_utils.output_results(input_df, self.root_path, a_prefix, counter_sum, sum_result_dict,self.prefix,self.output_extent,'sum')
         if sum(tetrad_counter_sum.values()) != 0:
             # Create an instance of the TetradCalculator
             calculator = intervals.TetradCalculator(color_counter,tetrad_counter_sum, self.tetrads_well)
@@ -192,12 +189,13 @@ class TetradCounter:
             # Call the compute method on the calculator instance
             triad_result_dict = calculator.compute() 
             logging.debug(f'[total_triads_classified] {triad_result_dict["total_classified"]}')
-            file_utils.output_results(input_df, self.root_path, a_prefix, triad_counter_sum, triad_result_dict,self.prefix,self.output_extent, 'triad')
+            file_utils.output_results(input_df, self.root_path, a_prefix, triad_counter_sum, triad_result_dict,self.prefix,self.output_extent, 'sum')
 
         # Write the updated DataFrame back to the Excel file once after all the loop iterations
         with pd.ExcelWriter(output_csv, engine='openpyxl') as writer:
             for name, sheet in input_df.items():
                 sheet.to_excel(writer, sheet_name=name, index=False)
+        print('Tetrad Detection Finished!')
 
 
     def _process_image(self, image: str,dataset: str, tetrad_type_dict: defaultdict, triad_type_dict: defaultdict, sum_type_dict: defaultdict, color_dict: defaultdict, combination_count: defaultdict):
@@ -258,7 +256,7 @@ class TetradCounter:
             target_dict[k] += v
             
     @staticmethod
-    def create_empty_excel_file(filename, sheet_names=['sum', 'tetrad', 'triad']):
+    def create_empty_excel_file(filename, sheet_names=['sum', 'tetrad']):
         """
         Create an empty Excel file with given sheet names.
 
