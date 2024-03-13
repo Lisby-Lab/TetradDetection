@@ -11,9 +11,9 @@ def get_sheet_name(result_type: str) -> str:
     """Determine the sheet name based on the result type."""
     return {
         "sum": "sum",
-        "tetrad": "tetrad",
-        "triad": "triad"
-    }.get(result_type, "triad")
+        "tetrad": "tetrad"
+        
+    }.get(result_type, "sum")
 
 def update_sheet_with_results(sheet: pd.DataFrame, prefix: str, result_dict: Dict[str, Any], detected_tetrad: Dict[str, Any], output_extent: str) -> pd.DataFrame:
     """
@@ -29,7 +29,6 @@ def update_sheet_with_results(sheet: pd.DataFrame, prefix: str, result_dict: Dic
     Returns:
     - Updated DataFrame.
     """
-    #print('detected_tetrad', detected_tetrad)
     # Ensure 'Prefix' column exists in the sheet
     if 'Prefix' not in sheet.columns:
         sheet['Prefix'] = ''
@@ -49,29 +48,46 @@ def update_sheet_with_results(sheet: pd.DataFrame, prefix: str, result_dict: Dic
                   'sum_gc_gain': "Gene Conversion with Gain of marker (frequency)",
                   'sum_gc_loss': "Gene Conversion with Loss of marker (frequency)",
                  }
-    
     # If output_extent is limited, filter the columns and rename them
     if output_extent == 'limited':
         result_dict = {k: v for k, v in result_dict.items() if k in limited_columns}
         detected_tetrad = {}  # Empty the detected_tetrad dictionary
+        hit = sheet.Prefix.astype(str).str.match('^' + prefix + '$')
+        if hit.sum() == 0:
+            new_row = {'Prefix': prefix}
+            new_row.update(result_dict)
+            new_row.update(detected_tetrad)
+            sheet = pd.concat([sheet, pd.DataFrame([new_row])], ignore_index=True)
+        else:
+            row_index = sheet.index[hit][0]
+            for dictionary in [result_dict, detected_tetrad]:
+                for col, value in dictionary.items():
+                    if isinstance(value, bool) and sheet[col].dtype != 'boolean':
+                        sheet[col] = sheet[col].astype('boolean')
+                    if isinstance(value, str):
+                        sheet[col] = sheet[col].astype(str)
+                    sheet.at[row_index, col] = value
         sheet = sheet.rename(columns=column_map)
-    # Check if prefix already exists in the sheet
-    hit = sheet.Prefix.astype(str).str.match('^' + prefix + '$')
-    if hit.sum() == 0:
-        new_row = {'Prefix': prefix}
-        new_row.update(result_dict)
-        new_row.update(detected_tetrad)
-        sheet = pd.concat([sheet, pd.DataFrame([new_row])], ignore_index=True)
 
     else:
-        row_index = sheet.index[hit][0]
-        for dictionary in [result_dict, detected_tetrad]:
-            for col, value in dictionary.items():
-                if isinstance(value, bool) and sheet[col].dtype != 'boolean':
-                    sheet[col] = sheet[col].astype('boolean')
-                if isinstance(value, str):
-                    sheet[col] = sheet[col].astype(str)
-                sheet.at[row_index, col] = value
+        hit = sheet.Prefix.astype(str).str.match('^' + prefix + '$')
+        if hit.sum() == 0:
+            new_row = {'Prefix': prefix}
+            new_row.update(result_dict)
+            new_row.update(detected_tetrad)
+            sheet = pd.concat([sheet, pd.DataFrame([new_row])], ignore_index=True)
+    
+        else:
+            row_index = sheet.index[hit][0]
+            for dictionary in [result_dict, detected_tetrad]:
+                for col, value in dictionary.items():
+                    if isinstance(value, bool) and sheet[col].dtype != 'boolean':
+                        sheet[col] = sheet[col].astype('boolean')
+                    if isinstance(value, str):
+                        sheet[col] = sheet[col].astype(str)
+                    sheet.at[row_index, col] = value
+                
+
             
     return sheet
 
@@ -90,7 +106,6 @@ def output_results(input_df, root_path, a_prefix, detected_tetrad, result_dict, 
     - result_type: Type of results ('sum', 'tetrad', or 'triad').
     """
     sheet_name = get_sheet_name(result_type)
-    
     # Ensure sheet exists
     if sheet_name not in input_df:
         input_df[sheet_name] = pd.DataFrame(columns=['Prefix'])
