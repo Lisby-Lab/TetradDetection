@@ -1,7 +1,7 @@
 # TetradDetection
 
 ## Description
-High-throughout _S.cerevisiae_ tetrad image analysis pipeline. The pipeline relies on two deeplearning models for accurate detection of tetrads and triads followed by subsequent classification into corresponding tetrad types based on recombination (non-crossover, crossover). The pipeline takes input fluorescent images (mCerulean, tdTomato, YFP) and outputs calculated map distance, interference, non-discjuntion and gene-conversion frequencies in an .xlsx file.
+High-throughout _S. cerevisiae_ tetrad image analysis pipeline. The pipeline relies on two deeplearning models for accurate detection of tetrads and triads followed by subsequent classification into corresponding tetrad types based on recombination (non-crossover, crossover). The pipeline takes input fluorescent images (mCerulean, tdTomato, YFP) and outputs calculated map distance, interference, non-disjunction and gene-conversion frequencies in an .xlsx file.
 
 ![Pipeline Architecture](./assets/pipeline_architecture.png)
 
@@ -16,7 +16,8 @@ conda create -n TetradDetection python=3.11.7
 conda activate TetradDetection
 ```
 
-### 3. Install TetradDetection in Windows
+### 3. Install TetradDetection in Windows/Mac
+Note: You need to download [git](https://git-scm.com/downloads) if it is not installed already.
 ```python
 git clone https://github.com/Lisby-Lab/TetradDetection.git
 ```
@@ -62,9 +63,14 @@ pip install -r requirements.txt
 ```python
 python3 entry.py --path ./imgs/
 ```
+or
+```python
+python entry.py --path ./imgs/
+```
+
 5. After the program finishes a new default.xlsx file will be created on the root folder containing calculated Map Distance, Interference, Non-Disjunction and Gene Conversion frequency values.
 
-### Side note:
+### Note:
 A tetrad detection only model is also available for [download](https://sid.erda.dk/share_redirect/B2zhGjLLiu). Unzip the weights and place them in the weights folder. 
 Within the Terminal type in:
 ```python
