@@ -36,7 +36,7 @@ pip install -r requirements.txt
 
 [Color Classification weights](https://sid.erda.dk/share_redirect/ChqIgVyH5h)
 
-### 6. Unzip the weights and place them in the weights folder
+### 6. Unzip the weights and place them in the ./TetradDetection/weights folder
 
 ## Usage
 ### Prerequisites
@@ -68,7 +68,7 @@ or
 python entry.py --path ./imgs/
 ```
 
-5. After the program finishes a new default.xlsx file will be created on the root folder containing calculated Map Distance, Interference, Non-Disjunction and Gene Conversion frequency values.
+5. After the program finishes a new ./TetradDetection/outputs/default.xlsx file will be created containing calculated Map Distance, Interference, Non-Disjunction and Gene Conversion frequency values.
 
 ### Note:
 A tetrad detection only model is also available for [download](https://sid.erda.dk/share_redirect/B2zhGjLLiu). Unzip the weights and place them in the weights folder. 
