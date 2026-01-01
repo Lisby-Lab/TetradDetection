@@ -24,7 +24,7 @@ class TetradCounter:
     Counts = namedtuple("Counts", ["tetrads", "triads"])
 
     def __init__(self, root_path: str, output_path: str, prefix, excel_file, output_extent, 
-                 tetrad_model_path: str = None, color_model_path: str = None) -> None:
+                 tetrad_model_path: str = None, color_model_path: str = None, tetrad_confidence : float = None, color_confidence : float = None) -> None:
         """
         Initializes the tetrad and color detection models and sets the root path.
 
@@ -45,6 +45,8 @@ class TetradCounter:
         self.prefix = prefix
         self.tetrad_model_path = tetrad_model_path
         self.color_model_path = color_model_path
+        self.tetrad_confidence = tetrad_confidence
+        self.color_confidence = color_confidence
         self.tetrads_well = 0
         self.triads_well = 0
         self._tetrad_model = None
@@ -226,13 +228,13 @@ class TetradCounter:
         'red': next(img for img in image if img.endswith("2.tiff")),
         'yellow': next(img for img in image if img.endswith("3.tiff"))
     }
-        tetrad_predictor = predict.TetradPredictor(tetrad_model=self.tetrad_model)
+        tetrad_predictor = predict.TetradPredictor(tetrad_model=self.tetrad_model, tetrad_confidence = self.tetrad_confidence)
         n_predictions, n_tetrads, n_triads,  scaled_transform_list, pred_class_thr   = tetrad_predictor.predict_tetrads(image_paths_dict)
 
         if n_predictions == 0:
             return TetradCounter.Counts(0, 0) , tetrad_type_dict, triad_type_dict, sum_type_dict, color_dict, combination_count
 
-        color_classifier = predict.TetradClassifier(color_model=self.color_model)
+        color_classifier = predict.TetradClassifier(color_model=self.color_model, color_confidence = self.color_confidence)
         detected_tetrad, detected_triad, detected_sum, color_count_dict, tetrad_counts = color_classifier.classify_tetrads(scaled_transform_list,pred_class_thr)
         
         # Update predicted tetrad classes into dictionary
@@ -298,6 +300,10 @@ def main():
     
     parser.add_argument('--output_extent', choices=['limited', 'extended'], default='limited',
                         help="Extent of the output to Excel file. Choices: 'limited' (default) or 'extended'. Extended version contains all outputs from TetradCalculator.")
+
+    parser.add_argument("--tetrad_confidence",type=float,default=0.85,help="Confidence threshold for tetrad/triad detection (default: 0.85)")
+
+    parser.add_argument("--color_confidence",type=float,default=0.85,help="Confidence threshold for color classification (default: 0.85)")
     
     args = parser.parse_args()
 
@@ -307,7 +313,7 @@ def main():
     else:
         logging.basicConfig(level=logging.WARNING)
 
-    tetrad_counter = TetradCounter(args.path, args.output, args.prefix, args.excel_file,args.output_extent, args.tetrad_model, args.color_model)
+    tetrad_counter = TetradCounter(args.path, args.output, args.prefix, args.excel_file,args.output_extent, args.tetrad_model, args.color_model, args.tetrad_confidence, args.color_confidence)
     tetrad_counter.run_tetrad_count_all_process()
     
 if __name__ == "__main__":

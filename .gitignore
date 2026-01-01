@@ -1,0 +1,11 @@
+weights/*.pth 
+weights/*.pth 
+outputs/default.xlsx
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Python bytecode
+__pycache__/
+*.pyc
+*.pyo
