@@ -150,8 +150,8 @@ class TetradCalculator:
         self.n_total_tetrads = self.calculate_total(tetrad_type_dict, self.n_total_all_tetrads)
         self.n_total_viable_tetrads = self.calculate_total(tetrad_type_dict, self.n_total_excluded_tetrads)
         
-        self.result_dict['total_predicted'] = self.total_tetrads
-        self.result_dict['total_classified'] = self.n_total_tetrads
+        self.result_dict['total_predicted'] = self.n_total_tetrads
+        self.result_dict['total_classified'] = self.total_tetrads
         
            
     def compute(self) -> Dict[str, Union[str, float]]:

@@ -14,7 +14,8 @@ from torch.utils.data import Dataset, DataLoader
 from collections import defaultdict
 from skimage import exposure, img_as_ubyte, img_as_float32
 from utils import tetrad_types
-
+import logging
+from skimage.transform import resize
 
 class TetradPredictor:
     """
@@ -42,6 +43,27 @@ class TetradPredictor:
         self.tetrad_confidence = tetrad_confidence
         self.device =  torch.device('cpu') 
 
+    def resize_to_model_input(self, img: np.ndarray, target_size=(1080, 1080)) -> np.ndarray:
+        """
+        Resize image to model input size if needed.
+        Preserves intensity range and dtype.
+        """
+        if img.shape == target_size:
+            return img
+        
+        if img.shape != (1080, 1080):
+            logging.info(f"Resizing image from {img.shape} to (1080, 1080)")
+      
+        img_resized = resize(
+            img,
+            output_shape=target_size,
+            order=3,               # bicubic
+            preserve_range=True,   # critical for microscopy
+            anti_aliasing=False
+        )
+        
+        return img_resized.astype(img.dtype)
+    
     def predict_tetrads(self, prefix: Dict[str, str]) -> Tuple[int, int, int, List[np.ndarray], List[np.ndarray], List[str]]:
         """
         Predicts tetrads from the given image paths.
@@ -56,6 +78,12 @@ class TetradPredictor:
         image_paths = [prefix['blue'], prefix['red'], prefix['yellow']]
         image_data = [imread(path) for path in image_paths]
         
+        # Resize each channel to model input size
+        image_data = [
+            self.resize_to_model_input(img, target_size=(1080, 1080))
+            for img in image_data
+        ]
+        print(image_data[0].shape)
         # Rescale images and merge
         blue, red, yellow = [img_as_ubyte(exposure.rescale_intensity(img)) for img in image_data]
         merged_rescaled = cv2.merge((blue, red, yellow))
