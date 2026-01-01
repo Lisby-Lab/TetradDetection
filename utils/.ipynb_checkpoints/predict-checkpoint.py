@@ -83,7 +83,7 @@ class TetradPredictor:
             self.resize_to_model_input(img, target_size=(1080, 1080))
             for img in image_data
         ]
-        print(image_data[0].shape)
+        
         # Rescale images and merge
         blue, red, yellow = [img_as_ubyte(exposure.rescale_intensity(img)) for img in image_data]
         merged_rescaled = cv2.merge((blue, red, yellow))
